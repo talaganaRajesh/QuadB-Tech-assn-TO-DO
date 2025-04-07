@@ -58,21 +58,21 @@ function TaskItem({ task }) {
           icon: <AlertTriangle size={16} className="text-red-500" />,
           textColor: "text-red-500",
           bgColor: "bg-red-100",
-          borderColor: "border-red-100",
+          borderColor: "border-red-400",
         }
       case "medium":
         return {
           icon: <Clock size={16} className="text-amber-500" />,
           textColor: "text-amber-500",
           bgColor: "bg-amber-50",
-          borderColor: "border-amber-100",
+          borderColor: "border-amber-300",
         }
       case "low":
         return {
           icon: <Clock size={16} className="text-blue-400" />,
           textColor: "text-blue-400",
           bgColor: "bg-blue-100",
-          borderColor: "border-blue-200",
+          borderColor: "border-blue-400",
         }
       default:
         return {

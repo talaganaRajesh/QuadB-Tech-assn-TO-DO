@@ -1,6 +1,6 @@
 # 📋 TaskMaster - Advanced Todo App
 
-Welcome to **TaskMaster**, an intuitive and responsive Todo application developed as part of an assignment given by **QuadB Tech**.
+Welcome to **TaskMaster**, a modern and responsive Todo application built as part of an assignment given by **QuadB Tech**. It empowers users to manage daily tasks with an intuitive interface and real-time interaction.
 
 🔗 **Live Demo**: [https://quadbtech-assn.vercel.app/](https://quadbtech-assn.vercel.app/)
 
@@ -8,21 +8,26 @@ Welcome to **TaskMaster**, an intuitive and responsive Todo application develope
 
 ## 🚀 Features
 
-- ✅ **Add, Edit, Delete Tasks** – Easily manage your task list.
-- 🎯 **Set Priorities** – Organize your work by importance.
-- 📅 **Due Date Picker** – Keep track of task deadlines.
-- 📌 **Mark as Complete** – Visualize progress on completed tasks.
-- 📱 **Responsive UI** – Optimized for both mobile and desktop screens.
+- ✅ **Add, Edit, and Delete Tasks**  
+- 📅 **Set Due Dates and Reminders**  
+- 🔼 **Prioritize Tasks** (High, Medium, Low)  
+- ☑️ **Mark Tasks as Completed**  
+- 🌓 **Light/Dark Mode Friendly UI**  
+- 📱 **Mobile Responsive Design**  
+- 🔁 **State Management with Redux**  
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Technology | Usage |
-|------------|-------|
-| ⚛️ React JS | Frontend development |
-| 🎨 CSS Modules | Scoped & maintainable styling |
-| 📦 Context API | State management |
+| Technology       | Description                                      |
+|------------------|--------------------------------------------------|
+| ⚛️ **React JS**     | Core framework for building UI components        |
+| 💅 **Tailwind CSS** | Utility-first framework for fast and responsive design |
+| 🧠 **Redux**        | State management for predictable data flow       |
+| 🧾 **JavaScript**    | Logic implementation and interactivity           |
+| 🎨 **CSS Modules**  | Scoped component styling                        |
+| 🌐 **Vercel**       | Hosting platform for fast global deployment     |
 
 ---
 
@@ -31,14 +36,14 @@ Welcome to **TaskMaster**, an intuitive and responsive Todo application develope
 To run this project locally, follow these steps:
 
 ```bash
-# Clone the repository
+# 1️⃣ Clone the repository
 git clone https://github.com/your-username/taskmaster.git
 
-# Navigate to the project folder
+# 2️⃣ Navigate to the project directory
 cd taskmaster
 
-# Install the dependencies
+# 3️⃣ Install all dependencies
 npm install
 
-# Start the development server
+# 4️⃣ Start the local server
 npm start

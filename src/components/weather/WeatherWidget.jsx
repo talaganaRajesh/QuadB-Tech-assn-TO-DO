@@ -3,95 +3,99 @@
 import { useSelector, useDispatch } from "react-redux"
 import { fetchWeather } from "../../features/weather/weatherSlice"
 import { useState } from "react"
-import { Cloud, Sun, CloudRain, Search, RefreshCw, CloudDrizzle, CloudLightning, Wind } from "lucide-react"
+import {
+  Cloud,
+  Sun,
+  CloudRain,
+  Search,
+  RefreshCw,
+  CloudDrizzle,
+  CloudLightning,
+  Wind,
+} from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
 function WeatherWidget() {
   const dispatch = useDispatch()
-  const { data: weather, loading, error } = useSelector((state) => state.weather)
+  const { data: weatherData, loading, error } = useSelector((state) => state.weather)
   const [location, setLocation] = useState("")
   const [isSearching, setIsSearching] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
 
-  // Handle weather refresh with animation
+  // Access the relevant data from weatherData
+  const weather = weatherData || null;
+  const locationInfo = weatherData || null;
+
   const handleRefresh = () => {
-    dispatch(fetchWeather(weather?.location || "New York"))
+    const currentLocation = locationInfo?.location || "New York";
+    dispatch(fetchWeather(currentLocation));
   }
 
-  // Handle location search
   const handleSearch = (e) => {
     e.preventDefault()
     if (!location.trim()) return
 
     setIsSearching(true)
-    dispatch(fetchWeather(location)).finally(() => {
-      setIsSearching(false)
-      setLocation("")
-    })
+    dispatch(fetchWeather(location))
+      .finally(() => {
+        setIsSearching(false)
+        setLocation("")
+      })
   }
 
-  // Get weather icon based on condition with animations
   const getWeatherIcon = () => {
-    if (!weather) return <Cloud className="h-10 w-10 text-gray-400" />
+    if (!weather?.condition) {
+      return <Cloud className="h-10 w-10 text-gray-400" />
+    }
 
     const condition = weather.condition.toLowerCase()
 
     if (condition.includes("rain") || condition.includes("drizzle")) {
       return (
-        <motion.div
-          animate={{ y: [0, -5, 0] }}
-          transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
-        >
+        <motion.div animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 3 }}>
           <CloudDrizzle className="h-10 w-10 text-blue-500" />
         </motion.div>
       )
-    } else if (condition.includes("thunder") || condition.includes("lightning")) {
+    }
+
+    if (condition.includes("thunder") || condition.includes("lightning")) {
       return (
-        <motion.div
-          animate={{ rotate: [-2, 2, -2] }}
-          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-        >
+        <motion.div animate={{ rotate: [-2, 2, -2] }} transition={{ repeat: Infinity, duration: 2 }}>
           <CloudLightning className="h-10 w-10 text-purple-500" />
         </motion.div>
       )
-    } else if (condition.includes("sun") || condition.includes("clear")) {
+    }
+
+    if (condition.includes("sun") || condition.includes("clear")) {
       return (
-        <motion.div
-          animate={{ rotate: [0, 360] }}
-          transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
-        >
+        <motion.div animate={{ rotate: [0, 360] }} transition={{ repeat: Infinity, duration: 20 }}>
           <Sun className="h-10 w-10 text-amber-500" />
         </motion.div>
       )
-    } else if (condition.includes("wind") || condition.includes("breeze")) {
+    }
+
+    if (condition.includes("wind") || condition.includes("breeze")) {
       return (
-        <motion.div
-          animate={{ x: [-3, 3, -3] }}
-          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-        >
+        <motion.div animate={{ x: [-3, 3, -3] }} transition={{ repeat: Infinity, duration: 2 }}>
           <Wind className="h-10 w-10 text-gray-500" />
         </motion.div>
       )
-    } else {
-      return (
-        <motion.div
-          animate={{ y: [0, -3, 0] }}
-          transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-        >
-          <Cloud className="h-10 w-10 text-gray-500" />
-        </motion.div>
-      )
     }
+
+    return (
+      <motion.div animate={{ y: [0, -3, 0] }} transition={{ repeat: Infinity, duration: 4 }}>
+        <Cloud className="h-10 w-10 text-gray-500" />
+      </motion.div>
+    )
   }
 
-  // Format the last updated time
   const getLastUpdated = () => {
-    if (!weather?.lastUpdated) return "Never"
-
-    return new Date(weather.lastUpdated).toLocaleTimeString("en-US", {
+    if (!locationInfo?.lastUpdated) return "Never";
+    // The lastUpdated in your slice is already an ISO string
+    return new Date(locationInfo.lastUpdated).toLocaleTimeString("en-US", {
       hour: "2-digit",
       minute: "2-digit",
-    })
+    });
   }
 
   return (
@@ -114,9 +118,9 @@ function WeatherWidget() {
           >
             <motion.div
               animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+              transition={{ repeat: Infinity, duration: 1 }}
               className="rounded-full h-10 w-10 border-b-2 border-t-2 border-black"
-            ></motion.div>
+            />
           </motion.div>
         )}
 
@@ -130,8 +134,6 @@ function WeatherWidget() {
           >
             <p>Failed to load weather data.</p>
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
               onClick={handleRefresh}
               className="mt-2 px-3 py-1 bg-black text-white rounded-md hover:bg-gray-800 text-sm"
             >
@@ -151,7 +153,9 @@ function WeatherWidget() {
               <div className="flex items-center">
                 {getWeatherIcon()}
                 <div className="ml-3">
-                  <h4 className="font-medium text-gray-800">{weather.location}</h4>
+                  <h4 className="font-medium text-gray-800">
+                    {locationInfo?.location || "Unknown"}
+                  </h4>
                   <p className="text-2xl font-bold">{weather.temp}°C</p>
                 </div>
               </div>
@@ -159,7 +163,6 @@ function WeatherWidget() {
                 <p className="text-gray-600">{weather.condition}</p>
                 <motion.button
                   whileHover={{ rotate: 180 }}
-                  transition={{ duration: 0.3 }}
                   onClick={handleRefresh}
                   className="text-gray-400 hover:text-black mt-1"
                   aria-label="Refresh weather"
@@ -168,31 +171,22 @@ function WeatherWidget() {
                 </motion.button>
               </div>
             </div>
-
             <p className="text-xs text-gray-500">Last updated: {getLastUpdated()}</p>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <motion.form
-        animate={{ y: isHovered ? 0 : 5, opacity: isHovered ? 1 : 0.8 }}
-        transition={{ duration: 0.2 }}
-        onSubmit={handleSearch}
-        className="mt-4"
-      >
+      <motion.form onSubmit={handleSearch} className="mt-4">
         <div className="flex">
           <motion.input
-            whileFocus={{ scale: 1.01 }}
             type="text"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
             placeholder="Search location..."
-            className="flex-grow px-3 py-2 text-sm border border-gray-200 rounded-l-md focus:outline-none focus:ring-1 focus:ring-black"
+            className="flex-grow px-3 py-2 text-sm border border-gray-200 rounded-l-md focus:outline-none"
             disabled={isSearching}
           />
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
             type="submit"
             className="px-3 py-2 bg-black text-white rounded-r-md hover:bg-gray-800 disabled:opacity-50"
             disabled={isSearching || !location.trim()}
@@ -200,9 +194,9 @@ function WeatherWidget() {
             {isSearching ? (
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                transition={{ repeat: Infinity, duration: 1 }}
                 className="h-4 w-4 border-2 border-white border-t-transparent rounded-full"
-              ></motion.div>
+              />
             ) : (
               <Search size={16} />
             )}

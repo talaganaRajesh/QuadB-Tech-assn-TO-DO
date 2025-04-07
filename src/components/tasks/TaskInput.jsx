@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { addTask } from "../../features/tasks/tasksSlice"
 import { motion } from "framer-motion"
 import { Plus, AlertTriangle, Clock } from "lucide-react"
-import CustomDropdown2 from "../ui/CustomDropdown2"
+import CustomDropdown from "../ui/CustomDropdown2"
 
 function TaskInput() {
   const dispatch = useDispatch()
@@ -148,7 +148,7 @@ function AnimatedOptions({ isExpanded, priority, setPriority }) {
       <div className="flex flex-col sm:flex-row sm:items-center gap-3 pt-1 pb-2">
         <div className="flex items-center space-x-2">
           <span className="text-sm font-medium text-gray-700">Priority:</span>
-          <CustomDropdown2
+          <CustomDropdown
             value={priority}
             onChange={(value) => setPriority(value)}
           />

@@ -1,78 +1,79 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-// Fetch weather data from OpenWeatherMap API
+// ✅ Async thunk to fetch real-time weather data
 export const fetchWeather = createAsyncThunk(
   "weather/fetchWeather",
   async (location = "New York", { rejectWithValue }) => {
     try {
-      // In a real app, you'd use your own API key
-      // For this demo, we'll simulate the API response
-      // const apiKey = 'your-api-key'
-      // const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`)
+      // ✅ Use Vite environment variable
+      const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
-      // Simulate API call delay
-      await new Promise((resolve) => setTimeout(resolve, 800))
-
-      // Simulate API response based on location
-      let mockWeather
-
-      switch (location.toLowerCase()) {
-        case "london":
-          mockWeather = { temp: 15, condition: "Rainy", icon: "10d" }
-          break
-        case "tokyo":
-          mockWeather = { temp: 25, condition: "Clear", icon: "01d" }
-          break
-        case "sydney":
-          mockWeather = { temp: 28, condition: "Sunny", icon: "01d" }
-          break
-        default:
-          // Default to New York
-          mockWeather = { temp: 22, condition: "Partly Cloudy", icon: "02d" }
+      // ✅ Input validation
+      if (!location || location.trim().length < 2) {
+        return rejectWithValue("Please enter a valid city name.");
       }
 
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`
+      );
+
+      const data = await response.json();
+
+      // ✅ Check for invalid response (like 404 city not found)
+      if (!response.ok) {
+        const errorMsg = data?.message || "Failed to fetch weather data";
+        throw new Error(errorMsg);
+      }
+
+      // ✅ Return simplified data
       return {
-        location,
-        ...mockWeather,
+        location: data.name,
+        temp: data.main.temp,
+        condition: data.weather[0].main,
+        icon: data.weather[0].icon,
         lastUpdated: new Date().toISOString(),
-      }
+      };
     } catch (error) {
-      return rejectWithValue(error.message)
+      return rejectWithValue(error.message);
     }
-  },
-)
+  }
+);
 
+// ✅ Initial State
 const initialState = {
   data: null,
   loading: false,
   error: null,
-}
+};
 
+// ✅ Redux Slice
 const weatherSlice = createSlice({
   name: "weather",
   initialState,
   reducers: {
     clearWeather: (state) => {
-      state.data = null
+      state.data = null;
+      state.loading = false;
+      state.error = null;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchWeather.pending, (state) => {
-        state.loading = true
-        state.error = null
+        state.loading = true;
+        state.error = null;
       })
       .addCase(fetchWeather.fulfilled, (state, action) => {
-        state.loading = false
-        state.data = action.payload
+        state.loading = false;
+        state.data = action.payload;
+        state.error = null;
       })
       .addCase(fetchWeather.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.payload
-      })
+        state.loading = false;
+        state.error = action.payload || "Failed to load weather data.";
+      });
   },
-})
+});
 
-export const { clearWeather } = weatherSlice.actions
-export default weatherSlice.reducer
-
+export const { clearWeather } = weatherSlice.actions;
+export default weatherSlice.reducer;

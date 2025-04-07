@@ -6,7 +6,6 @@ import { toggleTask, deleteTask, updateTaskPriority } from "../../features/tasks
 import { CheckCircle, Circle, Trash2, AlertTriangle, Clock, ChevronDown } from "lucide-react"
 import { motion } from "framer-motion"
 
-import CustomDropdown2 from "../ui/CustomDropdown2"; // adjust the import path as needed
 
 
 function TaskItem({ task }) {

@@ -15,7 +15,7 @@ function TaskInput() {
   const [isExpanded, setIsExpanded] = useState(false)
   const weatherData = useSelector((state) => state.weather.data)
 
-  const formRef = useRef(null) // Add a ref to the form element
+  const formRef = useRef(null) 
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -24,7 +24,6 @@ function TaskInput() {
       }
     }
 
-    // Add event listener
     document.addEventListener("mousedown", handleClickOutside)
 
     // Clean up
@@ -40,7 +39,6 @@ function TaskInput() {
 
     setIsLoading(true)
 
-    // Dispatch the addTask action with the task data
     await dispatch(
       addTask({
         text: text.trim(),

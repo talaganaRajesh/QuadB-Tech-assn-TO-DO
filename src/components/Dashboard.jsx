@@ -31,7 +31,6 @@ function Dashboard() {
 
   return (
     <div className="max-w-6xl mx-auto px-4">
-      {/* Main content area */}
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Left column - Tasks */}
         <div className="w-full lg:w-3/4 space-y-6">
@@ -59,13 +58,11 @@ function Dashboard() {
             </div>
           </div>
 
-          {/* Task Input Area */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 px-6 py-3">
             <h2 className="text-lg font-semibold text-gray-800 mb-4">Add New Task</h2>
             <TaskInput />
           </div>
 
-          {/* Task List Area */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-gray-800">Your Tasks</h2>
@@ -93,7 +90,6 @@ function Dashboard() {
             <WeatherWidget />
           </div>
 
-          {/* Task Statistics */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Task Overview</h3>
             
@@ -131,7 +127,6 @@ function Dashboard() {
               </div>
             </div>
             
-            {/* Quick stats */}
             <div className="grid grid-cols-2 gap-3 mt-5 pt-5 border-t border-gray-100">
               <div className="bg-gray-50 rounded-lg p-3 text-center">
                 <p className="text-xs text-gray-500 mb-1">Pending</p>

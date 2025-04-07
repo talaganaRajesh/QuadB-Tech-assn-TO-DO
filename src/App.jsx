@@ -10,19 +10,14 @@ import Dashboard from "./components/Dashboard"
 import Header from "./components/layout/Header"
 import Footer from "./components/layout/Footer"
 
-// Main application component that handles routing and authentication
 function App() {
   const dispatch = useDispatch()
   const { isAuthenticated, loading } = useSelector((state) => state.auth)
 
-  // Check if user is already logged in when app loads
-  // This simulates checking a token or session
   useEffect(() => {
-    // Hey future me, remember to update this when we implement real auth
     dispatch(checkAuthStatus())
   }, [dispatch])
 
-  // Protected route component to redirect unauthenticated users
   const ProtectedRoute = ({ children }) => {
     if (loading) return <div className="flex justify-center items-center h-screen">Loading...</div>
 

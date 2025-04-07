@@ -14,7 +14,6 @@ function TaskItem({ task }) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
 
-  // Format the creation date
   const formattedDate = new Date(task.createdAt).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
@@ -22,12 +21,10 @@ function TaskItem({ task }) {
     minute: "2-digit",
   })
 
-  // Handle task completion toggle with animation
   const handleToggle = () => {
     dispatch(toggleTask(task.id))
   }
 
-  // Handle task deletion with confirmation and animation
   const handleDelete = async () => {
     setIsDeleting(true)
     // Add a small delay for animation
@@ -49,7 +46,6 @@ function TaskItem({ task }) {
 
 
 
-  // Determine priority icon and color
   const getPriorityDetails = () => {
     switch (task.priority) {
       case "high":

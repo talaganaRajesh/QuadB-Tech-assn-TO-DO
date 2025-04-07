@@ -1,14 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
-// Simulated login function - in a real app, this would call an API
 export const login = createAsyncThunk("auth/login", async ({ email, password }, { rejectWithValue }) => {
   try {
-    // Simulate API call delay
     await new Promise((resolve) => setTimeout(resolve, 1000))
 
-    // Super basic validation - would be handled by backend in real app
     if (email === "demo@example.com" && password === "password") {
-      // Store in localStorage to persist across sessions
+      // Store in localStorage
       localStorage.setItem("user", JSON.stringify({ email, name: "Demo User" }))
       return { email, name: "Demo User" }
     }
@@ -19,7 +16,6 @@ export const login = createAsyncThunk("auth/login", async ({ email, password }, 
   }
 })
 
-// Simulated register function
 export const register = createAsyncThunk("auth/register", async ({ name, email, password }, { rejectWithValue }) => {
   try {
     // Simulate API call delay
@@ -33,7 +29,6 @@ export const register = createAsyncThunk("auth/register", async ({ name, email, 
   }
 })
 
-// Check if user is already logged in
 export const checkAuthStatus = createAsyncThunk("auth/checkStatus", async () => {
   // Simulate API call delay
   await new Promise((resolve) => setTimeout(resolve, 500))
@@ -46,10 +41,8 @@ export const checkAuthStatus = createAsyncThunk("auth/checkStatus", async () => 
   return null
 })
 
-// Logout function
 export const logout = createAsyncThunk("auth/logout", async () => {
   localStorage.removeItem("user")
-  // Clear tasks from localStorage too when logging out
   localStorage.removeItem("tasks")
   return null
 })

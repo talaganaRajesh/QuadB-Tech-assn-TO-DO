@@ -46,12 +46,11 @@ function Header() {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <Link to="/" className="text-xl font-bold text-emerald-600">
-            TaskMaster
+            Task Master
           </Link>
 
           {isAuthenticated ? (
             <div className="relative" ref={menuRef}>
-              {/* Profile Circle */}
               <div
                 onClick={toggleMenu}
                 className="h-10 w-10 rounded-full bg-emerald-600 text-white flex items-center justify-center text-sm font-semibold cursor-pointer hover:brightness-110 transition"
@@ -59,7 +58,6 @@ function Header() {
                 {userInitial}
               </div>
 
-              {/* Dropdown Menu */}
               {menuOpen && (
                 <div className="absolute right-0 mt-3 w-72 bg-white rounded-xl shadow-xl z-40 border border-gray-200 overflow-hidden">
                   <div className="px-4 py-3">
@@ -67,14 +65,12 @@ function Header() {
                     <p className="text-xs text-gray-500 truncate">{userEmail}</p>
                   </div>
 
-                  {/* Task Statistics */}
                   <div className="px-4 py-2 border-t border-b border-gray-100 text-sm space-y-1">
                     <p className="text-gray-700">📋 Total Tasks: <span className="font-semibold">{totalTasks}</span></p>
                     <p className="text-green-600">✅ Completed: <span className="font-semibold">{completedTasks}</span></p>
                     <p className="text-orange-500">🕒 Pending: <span className="font-semibold">{pendingTasks}</span></p>
                   </div>
 
-                  {/* Logout */}
                   <button
                     onClick={handleLogout}
                     className="w-full px-4 py-3 text-sm text-left text-gray-700 hover:bg-red-50 hover:text-red-600 flex items-center space-x-2 transition"

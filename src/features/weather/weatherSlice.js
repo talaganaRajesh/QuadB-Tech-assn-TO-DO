@@ -1,14 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-// ✅ Async thunk to fetch real-time weather data
 export const fetchWeather = createAsyncThunk(
   "weather/fetchWeather",
   async (location = "New York", { rejectWithValue }) => {
     try {
-      // ✅ Use Vite environment variable
       const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
-      // ✅ Input validation
       if (!location || location.trim().length < 2) {
         return rejectWithValue("Please enter a valid city name.");
       }
@@ -19,13 +16,11 @@ export const fetchWeather = createAsyncThunk(
 
       const data = await response.json();
 
-      // ✅ Check for invalid response (like 404 city not found)
       if (!response.ok) {
         const errorMsg = data?.message || "Failed to fetch weather data";
         throw new Error(errorMsg);
       }
 
-      // ✅ Return simplified data
       return {
         location: data.name,
         temp: data.main.temp,
@@ -39,14 +34,12 @@ export const fetchWeather = createAsyncThunk(
   }
 );
 
-// ✅ Initial State
 const initialState = {
   data: null,
   loading: false,
   error: null,
 };
 
-// ✅ Redux Slice
 const weatherSlice = createSlice({
   name: "weather",
   initialState,

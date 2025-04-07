@@ -20,9 +20,7 @@ function Register() {
 
   const [formErrors, setFormErrors] = useState({})
 
-  // Handle form input changes
   const handleChange = (e) => {
-    // Clear any previous errors when user starts typing
     if (error) dispatch(clearError())
 
     setFormData({
@@ -30,7 +28,6 @@ function Register() {
       [e.target.name]: e.target.value,
     })
 
-    // Clear field-specific error when user types
     if (formErrors[e.target.name]) {
       setFormErrors({
         ...formErrors,
@@ -39,7 +36,6 @@ function Register() {
     }
   }
 
-  // Validate form before submission
   const validateForm = () => {
     const errors = {}
 
@@ -67,7 +63,6 @@ function Register() {
     return Object.keys(errors).length === 0
   }
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault()
 
@@ -112,7 +107,6 @@ function Register() {
               {formErrors.name && <p className="mt-1 text-xs text-red-500">{formErrors.name}</p>}
             </div>
   
-            {/* Email */}
             <div className="relative">
               <label htmlFor="email" className="text-sm font-medium text-gray-700 mb-1 block">Email Address</label>
               <div className="relative">
@@ -130,7 +124,6 @@ function Register() {
               {formErrors.email && <p className="mt-1 text-xs text-red-500">{formErrors.email}</p>}
             </div>
   
-            {/* Password */}
             <div className="relative">
               <label htmlFor="password" className="text-sm font-medium text-gray-700 mb-1 block">Password</label>
               <div className="relative">
@@ -148,7 +141,6 @@ function Register() {
               {formErrors.password && <p className="mt-1 text-xs text-red-500">{formErrors.password}</p>}
             </div>
   
-            {/* Confirm Password */}
             <div className="relative">
               <label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700 mb-1 block">Confirm Password</label>
               <div className="relative">
@@ -166,7 +158,6 @@ function Register() {
               {formErrors.confirmPassword && <p className="mt-1 text-xs text-red-500">{formErrors.confirmPassword}</p>}
             </div>
   
-            {/* Submit */}
             <button
               type="submit"
               disabled={loading}
@@ -176,7 +167,6 @@ function Register() {
             </button>
           </form>
   
-          {/* Footer */}
           <div className="mt-6 text-center text-sm text-gray-600">
             Already have an account?{" "}
             <Link to="/login" className="text-emerald-600 font-medium hover:underline">Login here</Link>

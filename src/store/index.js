@@ -10,11 +10,9 @@ export const store = configureStore({
     tasks: tasksReducer,
     weather: weatherReducer,
   },
-  // Added this middleware after debugging some weird serialization issues
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        // Ignore these action types for non-serializable values
         ignoredActions: ["tasks/addTask/fulfilled"],
       },
     }),

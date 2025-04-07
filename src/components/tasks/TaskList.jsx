@@ -12,26 +12,24 @@ function TaskList() {
   const [filter, setFilter] = useState("all") // all, active, completed
   const [priorityFilter, setPriorityFilter] = useState("all") // all, high, medium, low
 
-  // Filter tasks by completion status and priority
   const filteredTasks = tasks.filter(task => {
     // Filter by completion status
     if (filter === "active" && task.completed) return false
     if (filter === "completed" && !task.completed) return false
 
-    // Filter by priority
+    //  by priority
     if (priorityFilter !== "all" && task.priority !== priorityFilter) return false
 
     return true
   })
 
-  // Sort tasks by priority and completion status
+  //  by both priority and completion status
   const sortedTasks = [...filteredTasks].sort((a, b) => {
     // First sort by completion status
     if (a.completed !== b.completed) {
       return a.completed ? 1 : -1
     }
 
-    // Then sort by priority
     const priorityOrder = { high: 0, medium: 1, low: 2 }
     return priorityOrder[a.priority] - priorityOrder[b.priority]
   })
@@ -161,7 +159,6 @@ function TaskList() {
   )
 }
 
-// Reusable filter button component
 function FilterButton({ active, onClick, label }) {
   return (
     <motion.button
